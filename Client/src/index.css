@@ -1,5 +1,9 @@
 @import "tailwindcss";
 
+*{
+  box-sizing: border-box;
+}
+
 @theme{
   --color-back: #32255A;
   --color-container: #54416D;
