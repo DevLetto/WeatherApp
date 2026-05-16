@@ -1,9 +1,9 @@
 export default function Sugestion({city}){
     
-    console.log(city)
+   
 
     return (
-       <p className="bg-black text-white">{city}</p> 
+       <p className="bg-container border border-white border-t-black rounded-b text-white">{city}</p> 
     )
 
 }

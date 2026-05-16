@@ -1,9 +1,9 @@
 import { Search } from "lucide-react";
 import Sugestion from "./Sugestion";
 
-export default function SearchInput({ city, setCity }) {
+export default function SearchInput({ city, setCity, getWeather }) {
   return (
-    <div className=" flex flex-col border">
+    <div className=" flex flex-col ">
       <div className="relative">
           <input
             type="text"
@@ -12,7 +12,7 @@ export default function SearchInput({ city, setCity }) {
             className="w-65 h-8 bg-white pl-2 pr-7 truncate rounded font-[Arial]"
             placeholder="Enter a city name..."
           />
-          <Search className="absolute bottom-1 left-58" />
+          <Search onClick={getWeather} className="absolute bottom-1 left-58" />
       </div>
       <div>
         <Sugestion city={city} />
