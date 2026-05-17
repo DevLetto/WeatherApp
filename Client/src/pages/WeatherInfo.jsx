@@ -1,8 +1,8 @@
-import { MapPin } from "lucide-react";
+import { MapPin, Wind, Droplets } from "lucide-react";
 
 export default function WeatherInfo({ weather }) {
   return (
-    <div className="h-45 w-97 rounded-xl bg-container  flex flex-rol pt-5 pl-5">
+    <div className="h-45 w-90 rounded-xl bg-container  flex flex-rol pt-5 pl-5">
       <div className="flex flex-col gap-5  w-1/2">
         <div className=" flex flex-rol items-center gap-1">
           <MapPin className="text-weatherText size-4" />
@@ -19,8 +19,13 @@ export default function WeatherInfo({ weather }) {
           </p>
         </div>
       </div>
-      <div className="border w-1/2 flex justify-end">
-        <div className="w-[90%] border border-pink-500">{/* Parei aqui */}</div>
+      <div className=" w-1/2 flex justify-end">
+        <div className="w-full  flex items-center ">
+          <ul className=" flex flex-col gap-5">
+            <li className="flex flex-rol text-sm text-weatherText items-center"> <Wind className="size-4" />Wind Speed: {weather.wind}km/h</li>
+            <li className="flex flex-rol text-sm text-weatherText items-center"><Droplets className="size-5" />Humidity: {weather.humidity}%</li>
+          </ul>
+        </div>
       </div>
     </div>
   );
