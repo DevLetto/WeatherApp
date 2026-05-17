@@ -34,11 +34,11 @@ export default function WeatherScreen() {
 //   console.log(city);
 
   return (
-    <div className="w-screen h-screen bg-back flex items-center justify-center">
-      <main className="h-[95%] w-[93%] flex flex-col items-center gap-10">
-        <section className="w-full h-[55%] bg-container rounded-xl border-border flex flex-col items-center p-10 ">
+    <div className="w-screen h-screen bg-back flex items-center justify-center pt-3">
+      <main className="h-full w-[93%] flex flex-col items-center gap-10">
+        <section className="w-full h-100 bg-container rounded-xl border-border flex flex-col items-center p-10 ">
           <div>
-            <Cloud color="white" size={110} />
+            <Cloud color="white" size={90} />
           </div>
           <div className="text-center">
             <h1 className="text-6xl text-white font-[Arial]">
@@ -48,7 +48,7 @@ export default function WeatherScreen() {
               Enter a city name to check the weather
             </p>
           </div>
-          <div className="mt-12">
+          <div className="mt-6  ">
             <SearchInput city={city} setCity={setCity} getWeather={getWeather} />
           </div>
         </section>
