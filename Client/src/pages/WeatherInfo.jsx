@@ -2,7 +2,7 @@ import { MapPin, Wind, Droplets } from "lucide-react";
 
 export default function WeatherInfo({ weather }) {
   return (
-    <div className="h-45 w-90 rounded-xl bg-container  flex flex-rol pt-5 pl-5">
+    <div className="h-45 w-90 rounded-xl bg-container  flex flex-rol pt-5 pl-5 fadeIn ">
       <div className="flex flex-col gap-5  w-1/2">
         <div className=" flex flex-rol items-center gap-1">
           <MapPin className="text-weatherText size-4" />

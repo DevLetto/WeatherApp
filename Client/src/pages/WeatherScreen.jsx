@@ -1,4 +1,4 @@
-import { Cloud } from "lucide-react";
+import { Cloud, Loader } from "lucide-react";
 import SearchInput from "./SearchInput";
 import { useEffect, useState } from "react";
 import WeatherInfo from "./WeatherInfo";
@@ -6,38 +6,59 @@ import WeatherInfo from "./WeatherInfo";
 export default function WeatherScreen() {
   const [city, setCity] = useState("");
   const [weather, setWeather] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
+  const [showInfo, setShowInfo] = useState(false);
 
   const getWeather = async () => {
 
-    try{
+    if(city.trim() === ""){
+      setError("Please enter a city name.");
+      setShowInfo(false);
+      return;
+    }
 
-      const response = await fetch(`http://localhost:8080/weather?city=${city}`);
+    setLoading(true);
+    setError(null);
+    setShowInfo(false);
+    try {
+      const response = await fetch(
+        `http://localhost:8080/weather?city=${city}`,
+      );
 
-      if (!response.ok){
-        console.error("Failed to fetch weather data: ", response.statusText )
-        return
+      if (!response.ok) {
+        console.error("Failed to fetch weather data: ", response.statusText);
+        setError("Failed to fetch weather data. Please try again.");
+        setShowInfo(false);                 
+        return;
       }
 
       const data = await response.json();
 
-     setWeather(data)
-
-    }catch(error){
+      setWeather(data);
+    } catch (error) {
       console.error("Error fetching weather: ", error);
+      setError(error.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    console.log(weather);
+    if(weather.length !== 0){
+      setShowInfo(true);
+
+    }
+  }, [weather]);
+
+  function onKeyClick(event) {
+    if (event.key == "Enter") {
+      getWeather();
     }
   }
-    
-  useEffect(()=>{
-    console.log(weather)
-  },[weather])
 
-   function onKeyClick(event){
-    if(event.key == "Enter"){
-      getWeather()
-    }
-  }
-
-//   console.log(city);
+  //   console.log(city);
 
   return (
     <div className="w-screen h-screen bg-back flex items-center justify-center pt-3">
@@ -55,11 +76,23 @@ export default function WeatherScreen() {
             </p>
           </div>
           <div className="mt-6  ">
-            <SearchInput city={city} setCity={setCity} getWeather={getWeather} onKeyClick={onKeyClick} />
+            <SearchInput
+              city={city}
+              setCity={setCity}
+              getWeather={getWeather}
+              onKeyClick={onKeyClick}
+            />
           </div>
         </section>
         <section>
-          <WeatherInfo weather={weather} />
+          {loading && (
+            <div className="flex items-center flex-col">
+              <Loader className="text-white size-10 animate-spin" />
+              <p className="text-white text-2xl">Loading...</p>
+            </div>
+          )}
+          {error && <p className="text-red-500 font-[Arial] text-xl text-center">{error}</p>}
+          {showInfo && <WeatherInfo weather={weather} />}
         </section>
       </main>
     </div>
