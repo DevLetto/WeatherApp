@@ -31,6 +31,12 @@ export default function WeatherScreen() {
     console.log(weather)
   },[weather])
 
+   function onKeyClick(event){
+    if(event.key == "Enter"){
+      getWeather()
+    }
+  }
+
 //   console.log(city);
 
   return (
@@ -49,7 +55,7 @@ export default function WeatherScreen() {
             </p>
           </div>
           <div className="mt-6  ">
-            <SearchInput city={city} setCity={setCity} getWeather={getWeather} />
+            <SearchInput city={city} setCity={setCity} getWeather={getWeather} onKeyClick={onKeyClick} />
           </div>
         </section>
         <section>
