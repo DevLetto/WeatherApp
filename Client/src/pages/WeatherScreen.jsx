@@ -4,6 +4,9 @@ import { useEffect, useState } from "react";
 import WeatherInfo from "./WeatherInfo";
 
 export default function WeatherScreen() {
+
+  const ip = import.meta.env.VITE_IP;
+
   const [city, setCity] = useState("");
   const [weather, setWeather] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -23,7 +26,7 @@ export default function WeatherScreen() {
     setShowInfo(false);
     try {
       const response = await fetch(
-        `http://localhost:8080/weather?city=${city}`,
+        `http://${ip}:8080/weather?city=${city}`,
       );
 
       if (!response.ok) {
@@ -84,7 +87,7 @@ export default function WeatherScreen() {
             />
           </div>
         </section>
-        <section>
+        <section >
           {loading && (
             <div className="flex items-center flex-col">
               <Loader className="text-white size-10 animate-spin" />
