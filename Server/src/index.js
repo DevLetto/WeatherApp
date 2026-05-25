@@ -7,9 +7,12 @@ const port = 8080
 app.use(cors());
 
 import MainRoutes from "./routes/MainRoutes.js"
+import SuggestionRoute from "./routes/SuggestionRoute.js"
 
 
 app.use("/weather", MainRoutes );
+app.use("/suggestion", SuggestionRoute)
+
 
 
 app.listen(port, () => console.log(`Server running on port ${port}`));

@@ -5,7 +5,8 @@ import WeatherInfo from "./WeatherInfo";
 
 export default function WeatherScreen() {
 
-  const ip = import.meta.env.VITE_IP;
+  // const ip = import.meta.env.VITE_IP;
+  const api_url = `http://${window.location.hostname}:8080/weather`;
 
   const [city, setCity] = useState("");
   const [weather, setWeather] = useState([]);
@@ -25,9 +26,7 @@ export default function WeatherScreen() {
     setError(null);
     setShowInfo(false);
     try {
-      const response = await fetch(
-        `http://${ip}:8080/weather?city=${city}`,
-      );
+      const response = await fetch(`${api_url}?city=${city}`);
 
       if (!response.ok) {
         console.error("Failed to fetch weather data: ", response.statusText);
