@@ -18,7 +18,7 @@ export default async function SuggestionController(req, res) {
 
     res.status(200).json(names);
   } catch (error) {
-    console.error("Erron on SuggestionController: ", error.messagem);
+    console.error("Erron on SuggestionController: ", error.message);
     res.status(500).json({error:  "Error on server"});
   }
 }

@@ -16,7 +16,7 @@ export default function SearchInput({ city, setCity, getWeather, onKeyClick }) {
         <Search onClick={getWeather}  className="absolute bottom-2 left-58" />
       </div>
       <div>
-        
+        <Sugestion city={city}/>
       </div>
     </div>
   );

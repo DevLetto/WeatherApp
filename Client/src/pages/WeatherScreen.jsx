@@ -7,12 +7,14 @@ export default function WeatherScreen() {
 
   // const ip = import.meta.env.VITE_IP;
   const api_url = `http://${window.location.hostname}:8080/weather`;
+  const suggestion_url = `http://${window.location.hostname}:8080/suggestions`;
 
   const [city, setCity] = useState("");
   const [weather, setWeather] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [showInfo, setShowInfo] = useState(false);
+  const [suggestions, setSuggestions] = useState([]);
 
   const getWeather = async () => {
 
@@ -59,6 +61,26 @@ export default function WeatherScreen() {
       getWeather();
     }
   }
+
+  useEffect( () => {
+    
+    if(city.length == 4){
+      // try{
+        
+      //   const response = await fetch(`${suggestion_url}?city=${city}`) 
+  
+  
+      // }catch(error){
+  
+      // }
+      console.log("Cu")
+    }
+
+    
+
+  }, [city])
+
+  
 
   //   console.log(city);
 
