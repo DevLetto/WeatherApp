@@ -4,10 +4,9 @@ import { useEffect, useState } from "react";
 import WeatherInfo from "./WeatherInfo";
 
 export default function WeatherScreen() {
-
   // const ip = import.meta.env.VITE_IP;
   const api_url = `http://${window.location.hostname}:8080/weather`;
-  const suggestion_url = `http://${window.location.hostname}:8080/suggestions`;
+  const suggestion_url = `http://${window.location.hostname}:8080/suggestion`;
 
   const [city, setCity] = useState("");
   const [weather, setWeather] = useState([]);
@@ -17,8 +16,7 @@ export default function WeatherScreen() {
   const [suggestions, setSuggestions] = useState([]);
 
   const getWeather = async () => {
-
-    if(city.trim() === ""){
+    if (city.trim() === "") {
       setError("Please enter a city name.");
       setShowInfo(false);
       return;
@@ -33,7 +31,7 @@ export default function WeatherScreen() {
       if (!response.ok) {
         console.error("Failed to fetch weather data: ", response.statusText);
         setError("Failed to fetch weather data. Please try again.");
-        setShowInfo(false);                 
+        setShowInfo(false);
         return;
       }
 
@@ -50,9 +48,8 @@ export default function WeatherScreen() {
 
   useEffect(() => {
     console.log(weather);
-    if(weather.length !== 0){
+    if (weather.length !== 0) {
       setShowInfo(true);
-
     }
   }, [weather]);
 
@@ -62,25 +59,37 @@ export default function WeatherScreen() {
     }
   }
 
-  useEffect( () => {
-    
-    if(city.length == 4){
-      // try{
-        
-      //   const response = await fetch(`${suggestion_url}?city=${city}`) 
-  
-  
-      // }catch(error){
-  
-      // }
-      console.log("Cu")
-    }
+  useEffect(() => {
+    const loadSuggestions = async () => {
+      if (suggestions.length != 0) {
+        console.log(" ");
+      } else {
+        if (city.length == 4) {
+          try {
+            const response = await fetch(`${suggestion_url}?city=${city}`);
 
-    
+            const data = await response.json();
 
-  }, [city])
+            // if (!response.ok) {
+            //   console.error(
+            //     "Failed to fetch suggestion: ",
+            //     response.statusText,
+            //   );
+            // }
 
-  
+            // suggestions = JSON.parse(response);
+
+            console.log(data)
+          } catch (error) {
+            console.error("Error fetching suggestions: ", error.message);
+          }
+          console.log("teste");
+        }
+      }
+    };
+
+    loadSuggestions()
+  }, [city]);
 
   //   console.log(city);
 
@@ -108,14 +117,18 @@ export default function WeatherScreen() {
             />
           </div>
         </section>
-        <section >
+        <section>
           {loading && (
             <div className="flex items-center flex-col">
               <Loader className="text-white size-10 animate-spin" />
               <p className="text-white text-2xl">Loading...</p>
             </div>
           )}
-          {error && <p className="text-red-500 font-[Arial] text-xl text-center">{error}</p>}
+          {error && (
+            <p className="text-red-500 font-[Arial] text-xl text-center">
+              {error}
+            </p>
+          )}
           {showInfo && <WeatherInfo weather={weather} />}
         </section>
       </main>
