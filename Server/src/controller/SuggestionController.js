@@ -12,7 +12,7 @@ export default async function SuggestionController(req, res) {
 
     const names = suggestions.map((item) => ({
         name: item.name,
-        contry: item.country,
+        country: item.country,
         state: item.state
     }))
 

@@ -14,6 +14,7 @@ export default function WeatherScreen() {
   const [error, setError] = useState(null);
   const [showInfo, setShowInfo] = useState(false);
   const [suggestions, setSuggestions] = useState([]);
+  const [isTyping, setIsTyping] = useState(false);
 
   const getWeather = async () => {
     if (city.trim() === "") {
@@ -59,36 +60,73 @@ export default function WeatherScreen() {
     }
   }
 
+  //Verify if the user is typing
+  // useEffect(() => {
+  //   if (!city) {
+  //     setIsTyping(false);
+  //     return;
+  //   }
+
+  //   const timeOutId = setTimeout(() => {
+  //     setIsTyping(false);
+  //     console.log("User stoped typing: ", city);
+  //   }, 1000);
+
+  //   return () => clearTimeout(timeOutId);
+  // }, [city]);
+
+  const handleChanges = (event) => {
+    setCity(event.target.value);
+    setIsTyping(true);
+  };
+
+  //Suggestions
   useEffect(() => {
+    console.log("Effect running")
+    //load Suggestions funciton
     const loadSuggestions = async () => {
-      if (suggestions.length != 0) {
-        console.log(" ");
-      } else {
-        if (city.length == 4) {
-          try {
-            const response = await fetch(`${suggestion_url}?city=${city}`);
+      if (city.length > 3) {
+        setSuggestions([]);
+        try {
+          const response = await fetch(`${suggestion_url}?city=${city}`);
 
-            const data = await response.json();
-
-            // if (!response.ok) {
-            //   console.error(
-            //     "Failed to fetch suggestion: ",
-            //     response.statusText,
-            //   );
-            // }
-
-            // suggestions = JSON.parse(response);
-
-            console.log(data)
-          } catch (error) {
-            console.error("Error fetching suggestions: ", error.message);
+          if (!response.ok) {
+            console.error("Failed to fetch suggestion: ", response.statusText);
           }
-          console.log("teste");
+          const data = await response.json();
+
+          setSuggestions(Array.isArray(data) ? data : []);
+
+        console.log("Fetch da silva", suggestions)
+        } catch (error) {
+          console.error("Error fetching suggestions: ", error.message);
         }
+        console.log("Fetch running");
       }
     };
 
-    loadSuggestions()
+    //Verify if the city field is empty
+    if (!city) {
+      setIsTyping(false);
+      setSuggestions([]);
+      return;
+    }
+
+    //Verify if the suggestion box isnt empty
+    if (suggestions.length != 0) {
+      console.log("Sugestoes", suggestions);
+    } else {
+      loadSuggestions();
+    }
+
+    const timeOutId = setTimeout(() => {
+      setIsTyping(false);
+
+      loadSuggestions();
+      console.log("User stoped typing: ", city);
+    }, 1000);
+
+    return () => clearTimeout(timeOutId);
   }, [city]);
 
   //   console.log(city);
@@ -114,6 +152,8 @@ export default function WeatherScreen() {
               setCity={setCity}
               getWeather={getWeather}
               onKeyClick={onKeyClick}
+              handleChange={handleChanges}
+              suggestion={suggestions}
             />
           </div>
         </section>
