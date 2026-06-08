@@ -1,13 +1,27 @@
-export default function Sugestion({suggestion}){
+export default function Sugestion({setCity, suggestion, setSuggestion}){
     
+   function selectSuggestion(text){
+    setSuggestion([])
+    setCity(text)
+   } 
+
    
 
     return (
         
         <div>
+            <ul>
+
             {suggestion.map((city) => (
-                <p className="bg-container border border-white border-t-black rounded-b text-white">{`${city.name}, ${city.state}, ${city.country} `}</p>
+                <li>
+                    <button 
+                    onClick={() => selectSuggestion(`${city.name}, ${city.state}, ${city.country} `)}
+                    className="bg-container border border-white border-t-black  text-white h-9 w-full text-start pl-1 hover:bg-back">{`${city.name}, ${city.state}, ${city.country} `}</button>
+                    
+
+                </li>
             ))}
+            </ul>
         </div>
         
     )

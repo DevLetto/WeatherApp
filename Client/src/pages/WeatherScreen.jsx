@@ -154,6 +154,7 @@ export default function WeatherScreen() {
               onKeyClick={onKeyClick}
               handleChange={handleChanges}
               suggestion={suggestions}
+              setSuggestion={setSuggestions}
             />
           </div>
         </section>
