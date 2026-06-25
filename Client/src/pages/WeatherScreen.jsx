@@ -146,7 +146,7 @@ export default function WeatherScreen() {
               Enter a city name to check the weather
             </p>
           </div>
-          <div className="mt-6  ">
+          <div className="mt-6  z-10">
             <SearchInput
               city={city}
               setCity={setCity}
@@ -158,7 +158,7 @@ export default function WeatherScreen() {
             />
           </div>
         </section>
-        <section>
+        <section >
           {loading && (
             <div className="flex items-center flex-col">
               <Loader className="text-white size-10 animate-spin" />
