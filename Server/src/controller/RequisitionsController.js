@@ -12,12 +12,12 @@ export default async function RequisitionsController(req, res) {
             return res.status(500).json({error: "Error on getting coordinates"})
         }
 
-        const lat = geoCoder[0].lat
-        const long = geoCoder[0].lon
+        const lati = geoCoder[0].lat
+        const longi = geoCoder[0].lon
 
-        console.log(lat, long);
+        console.log(lati, longi);
 
-        const weatherResponse = await WeatherApiService(lat, long)
+        const weatherResponse = await WeatherApiService(lati, longi)
 
         if(!weatherResponse){
             return res.status(500).json({error: "Error on search weather"})
