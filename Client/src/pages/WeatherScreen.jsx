@@ -4,10 +4,6 @@ import { useEffect, useState } from "react";
 import WeatherInfo from "./WeatherInfo";
 
 export default function WeatherScreen() {
-  // const ip = import.meta.env.VITE_IP;
-  const api_url = `http://${window.location.hostname}:8080/weather`;
-  const suggestion_url = `http://${window.location.hostname}:8080/suggestion`;
-
   const [city, setCity] = useState("");
   const [weather, setWeather] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -27,7 +23,9 @@ export default function WeatherScreen() {
     setError(null);
     setShowInfo(false);
     try {
-      const response = await fetch(`${api_url}?city=${city}`);
+      const response = await fetch(
+        `https://weatherapp-production-1152.up.railway.app/weather?city=${city}`,
+      );
 
       if (!response.ok) {
         console.error("Failed to fetch weather data: ", response.statusText);
@@ -82,13 +80,15 @@ export default function WeatherScreen() {
 
   //Suggestions
   useEffect(() => {
-    console.log("Effect running")
+    console.log("Effect running");
     //load Suggestions funciton
     const loadSuggestions = async () => {
       if (city.length > 3) {
         setSuggestions([]);
         try {
-          const response = await fetch(`${suggestion_url}?city=${city}`);
+          const response = await fetch(
+            `https://weatherapp-production-1152.up.railway.app/suggestion?city=${city}`,
+          );
 
           if (!response.ok) {
             console.error("Failed to fetch suggestion: ", response.statusText);
@@ -97,7 +97,7 @@ export default function WeatherScreen() {
 
           setSuggestions(Array.isArray(data) ? data : []);
 
-        console.log("Fetch da silva", suggestions)
+          console.log("Fetch da silva", suggestions);
         } catch (error) {
           console.error("Error fetching suggestions: ", error.message);
         }
@@ -158,7 +158,7 @@ export default function WeatherScreen() {
             />
           </div>
         </section>
-        <section >
+        <section>
           {loading && (
             <div className="flex items-center flex-col">
               <Loader className="text-white size-10 animate-spin" />
