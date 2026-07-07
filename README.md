@@ -1,6 +1,6 @@
-# Weather Forecast
+# Weather App
 
-A simple and responsive weather forecast application that allows users to search for cities and access real-time weather information.
+A simple and responsive weather application that allows users to search for cities and access real-time weather information.
 
 The application provides a search system with autocomplete suggestions, allowing users to quickly find locations. After selecting a city, the current weather data is displayed, including temperature, weather conditions, wind speed and air humidity.
 
